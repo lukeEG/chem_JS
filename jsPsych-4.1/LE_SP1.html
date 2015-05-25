@@ -1,0 +1,409 @@
+<!doctype html>
+<html>
+  <head>
+  	<title>Word Learning</title>
+    <script src="tests&examples/js/jquery.min.js"></script>
+    <script src="tests&examples/js/jquery-ui.min.js"></script>
+    <script src="jspsych.js"></script>
+    <script src="plugins/jspsych-text.js"></script>
+    <script src="plugins/jspsych-single-stim.js"></script>
+    <script src="plugins/jspsych-survey-likert.js"></script>
+    <script src="plugins/jspsych-survey-text.js"></script>
+    <script src="plugins/jspsych-survey-text-table.js"></script>
+    <link rel="stylesheet" href="css/jspsych.css">
+  </head>
+  <body>
+    <div id="jspsych-target"></div>
+  </body>
+  <script>
+
+  //TO FINISH: 
+  // 1) Add in the self prime and control passages as blocks
+  // 2) Add in blocks for 15 second gaps between study and test/restudy
+  // 3) Add in blocks for 5 minutes gap between final test/restudy block and the FINAL free recall test
+
+var wordArray = [
+    {strong: 'Toast',      weak: 'Basket',        target: '<u><b>BREAD</u></b>'},
+    {strong: 'Jury',       weak: 'Rights',        target: '<u><b>COURT</u></b>'},
+    {strong: 'Valentine',  weak: 'Rib',           target: '<u><b>HEART</u></b>'},
+    {strong: 'Rodeo',      weak: 'Camel',         target: '<u><b>HORSE</u></b>'},
+    {strong: 'Stereo',     weak: 'Theater',       target: '<u><b>MUSIC</u></b>'},
+    {strong: 'Neptune',    weak: 'Comet',         target: '<u><b>PLANET</u></b>'},
+    {strong: 'Chimney',    weak: 'Fire',          target: '<u><b>SMOKE</u></b>'},
+    {strong: 'Dentist',    weak: 'Lips',          target: '<u><b>TEETH</u></b>'},
+    {strong: 'Chunk',      weak: 'Chisel',        target: '<u><b>BLOCK</u></b>'},
+    {strong: 'Adolescent', weak: 'Mitten',        target: '<u><b>CHILD</u></b>'},
+    {strong: 'Tea',        weak: 'Steam',         target: '<u><b>COFFEE</u></b>'},
+    {strong: 'Patient',    weak: 'Virus',         target: '<u><b>DOCTOR</u></b>'},
+    {strong: 'Mow',        weak: 'Picnic',        target: '<u><b>GRASS</u></b>'},
+    {strong: 'Fork',       weak: 'Kitchen',       target: '<u><b>KNIFE</u></b>'},
+    {strong: 'Cost',       weak: 'Contest',       target: '<u><b>MONEY</u></b>'},
+    {strong: 'Station',    weak: 'Airplane',      target: '<u><b>TRAIN</u></b>'},
+    {strong: 'Vein',       weak: 'Bruise',        target: '<u><b>BLOOD</u></b>'},
+    {strong: 'Sphere',     weak: 'Hole',          target: '<u><b>CIRCLE</u></b>'},
+    {strong: 'Skirt',      weak: 'Maid',          target: '<u><b>DRESS</u></b>'},
+    {strong: 'Blossom',    weak: 'Leaf',          target: '<u><b>FLOWER</u></b>'},
+    {strong: 'Suite',      weak: 'Lounge',        target: '<u><b>HOTEL</u></b>'},
+    {strong: 'Adventure',  weak: 'Desert',        target: '<u><b>ISLAND</u></b>'},
+    {strong: 'Switch',     weak: 'Morning',       target: '<u><b>LIGHT</u></b>'},
+    {strong: 'Education',  weak: 'Pupil',         target: '<u><b>SCHOOL</u></b>'},
+    {strong: 'Bristle',    weak: 'Flick',         target: '<u><b>BRUSH</u></b>'},
+    {strong: 'Beverage',   weak: 'Ice',           target: '<u><b>DRINK</u></b>'},
+    {strong: 'Mop',        weak: 'Elevator',      target: '<u><b>FLOOR</u></b>'},
+    {strong: 'Home',       weak: 'Barn',          target: '<u><b>HOUSE</u></b>'},
+    {strong: 'Video',      weak: 'Television',    target: '<u><b>MOVIE</u></b>'},
+    {strong: 'Folder',     weak: 'Scissors',      target: '<u><b>PAPER</u></b>'},
+    {strong: 'Stream',     weak: 'Bay',           target: '<u><b>RIVER</u></b>'},
+    {strong: 'Main',       weak: 'Directions',    target: '<u><b>STREET</u></b>'},
+    {strong: 'Shell',      weak: 'Raft',          target: '<u><b>BEACH</u></b>'},
+    {strong: 'Couch',      weak: 'Hammock',       target: '<u><b>CHAIR</u></b>'},
+    {strong: 'Alarm',      weak: 'Dial',          target: '<u><b>CLOCK</u></b>'},
+    {strong: 'Prom',       weak: 'Spin',          target: '<u><b>DANCE</u></b>'},
+    {strong: 'Wilderness', weak: 'Meadow',        target: '<u><b>FOREST</u></b>'},
+    {strong: 'Shatter',    weak: 'Bead',          target: '<u><b>GLASS</u></b>'},
+    {strong: 'Saliva',     weak: 'Speak',         target: '<u><b>MOUTH</u></b>'},
+    {strong: 'Rock',       weak: 'Building',      target: '<u><b>STONE</u></b>'},
+    {strong: 'Minister',   weak: 'Soul',          target: '<u><b>CHURCH</u></b>'},
+    {strong: 'Lunch',      weak: 'Manners',       target: '<u><b>DINNER</u></b>'},
+    {strong: 'Picket',     weak: 'Barrier',       target: '<u><b>FENCE</u></b>'},
+    {strong: 'Plum',       weak: 'Seed',          target: '<u><b>FRUIT</u></b>'},
+    {strong: 'Note',       weak: 'Print',         target: '<u><b>LETTER</u></b>'},
+    {strong: 'Call',       weak: 'Ear',           target: '<u><b>PHONE</u></b>'},
+    {strong: 'Cuff',       weak: 'Jacket',        target: '<u><b>SHIRT</u></b>'},
+    {strong: 'Hose',       weak: 'Mist',          target: '<u><b>WATER</u></b>'}
+];
+
+//SHUFFLE ARRAY
+wordArray = fisherYates(wordArray); //This function is at the bottom
+
+var intro = {
+	type: 'text',
+	text: "Welcome to the experiment. Press spacebar to begin."
+};
+
+var R1_stim_orig = ['<center>'+wordArray[0].strong+'    '+wordArray[0].target+'</center>',
+		'<center>'+wordArray[1].weak+'    '+wordArray[1].target+'</center>',
+		'<center>'+wordArray[2].strong+'    '+wordArray[2].target+'</center>',
+		'<center>'+wordArray[3].weak+'    '+wordArray[3].target+'</center>',
+		'<center>'+wordArray[4].strong+'    '+wordArray[4].target+'</center>',
+		'<center>'+wordArray[5].weak+'    '+wordArray[5].target+'</center>',
+		'<center>'+wordArray[6].strong+'    '+wordArray[6].target+'</center>',
+		'<center>'+wordArray[7].weak+'    '+wordArray[7].target+'</center>'
+		];
+
+var R1_study_stim = jsPsych.randomization.repeat(R1_stim_orig, 1);//Shuffled
+var block_R1_study = {
+	type: 'single-stim',
+	stimuli: R1_study_stim,
+	is_html: true,
+    choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+
+var R1_stim = jsPsych.randomization.repeat(R1_stim_orig, 1);//Shuffled
+var block_R1 = {
+	type: 'single-stim',
+	stimuli: R1_stim,
+	is_html: true,
+    choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+var R2_stim_orig = ['<center>'+wordArray[8].strong+'    '+wordArray[8].target+'</center>',
+		'<center>'+wordArray[9].weak+'    '+wordArray[9].target+'</center>',
+		'<center>'+wordArray[10].strong+'    '+wordArray[10].target+'</center>',
+		'<center>'+wordArray[11].weak+'    '+wordArray[11].target+'</center>',
+		'<center>'+wordArray[12].strong+'    '+wordArray[12].target+'</center>',
+		'<center>'+wordArray[13].weak+'    '+wordArray[13].target+'</center>',
+		'<center>'+wordArray[14].strong+'    '+wordArray[14].target+'</center>',
+		'<center>'+wordArray[15].weak+'    '+wordArray[15].target+'</center>'
+		];
+
+var R2_study_stim = jsPsych.randomization.repeat(R2_stim_orig, 1);//Shuffled
+var block_R2_study = {
+	type: 'single-stim',
+	stimuli: R2_study_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+
+var R2_stim = jsPsych.randomization.repeat(R2_stim_orig, 1);//Shuffled
+var block_R2 = {
+	type: 'single-stim',
+	stimuli: R2_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+
+var R3_stim_orig = ['<center>'+wordArray[16].strong+'    '+wordArray[16].target+'</center>',
+		'<center>'+wordArray[17].weak+'    '+wordArray[17].target+'</center>',
+		'<center>'+wordArray[18].strong+'    '+wordArray[18].target+'</center>',
+		'<center>'+wordArray[19].weak+'    '+wordArray[19].target+'</center>',
+		'<center>'+wordArray[20].strong+'    '+wordArray[20].target+'</center>',
+		'<center>'+wordArray[21].weak+'    '+wordArray[21].target+'</center>',
+		'<center>'+wordArray[22].strong+'    '+wordArray[22].target+'</center>',
+		'<center>'+wordArray[23].weak+'    '+wordArray[23].target+'</center>'
+		];
+
+var R3_study_stim = jsPsych.randomization.repeat(R3_stim_orig, 1);//Shuffled
+var block_R3_study = {
+	type: 'single-stim',
+	stimuli: R3_study_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+var R3_stim = jsPsych.randomization.repeat(R3_stim_orig, 1);//Shuffled
+var block_R3 = {
+	type: 'single-stim',
+	stimuli: R3_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+//
+//study stim
+var T1_stim_study_orig = ['<center>'+wordArray[24].strong+'    '+wordArray[24].target+'</center>',
+		'<center>'+wordArray[25].weak+'    '+wordArray[25].target+'</center>',
+		'<center>'+wordArray[26].strong+'    '+wordArray[26].target+'</center>',
+		'<center>'+wordArray[27].weak+'    '+wordArray[27].target+'</center>',
+		'<center>'+wordArray[28].strong+'    '+wordArray[28].target+'</center>',
+		'<center>'+wordArray[29].weak+'    '+wordArray[29].target+'</center>',
+		'<center>'+wordArray[30].strong+'    '+wordArray[30].target+'</center>',
+		'<center>'+wordArray[31].weak+'    '+wordArray[31].target+'</center>'
+		];
+
+var T1_study_stim = jsPsych.randomization.repeat(T1_stim_study_orig, 1);//Shuffled
+var block_T1_study = {
+	type: 'single-stim',
+	stimuli: T1_study_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+var T1_stim_orig = [[''+wordArray[24].strong+'    '+'_______'+''],
+		[''+wordArray[25].weak+'    '+'_______'+''],
+		[''+wordArray[26].strong+'    '+'_______'+''],
+		[''+wordArray[27].weak+'    '+'_______'+''],
+		[''+wordArray[28].strong+'    '+'_______'+''],
+		[''+wordArray[29].weak+'    '+'_______'+''],
+		[''+wordArray[30].strong+'    '+'_______'+''],
+		[''+wordArray[31].weak+'    '+'_______'+'']
+		];
+		
+var T1_stim = jsPsych.randomization.repeat(T1_stim_orig, 1);//Shuffled
+var block_T1 = {
+	type: 'survey-text-table',
+	questions: T1_stim,
+	is_html: true,
+	
+};
+
+var T2_stim_study_orig = ['<center>'+wordArray[32].strong+'    '+wordArray[32].target+'</center>',
+		'<center>'+wordArray[33].weak+'    '+wordArray[33].target+'</center>',
+		'<center>'+wordArray[34].strong+'    '+wordArray[34].target+'</center>',
+		'<center>'+wordArray[35].weak+'    '+wordArray[35].target+'</center>',
+		'<center>'+wordArray[36].strong+'    '+wordArray[36].target+'</center>',
+		'<center>'+wordArray[37].weak+'    '+wordArray[37].target+'</center>',
+		'<center>'+wordArray[38].strong+'    '+wordArray[38].target+'</center>',
+		'<center>'+wordArray[39].weak+'    '+wordArray[39].target+'</center>'
+		];
+
+var T2_study_stim = jsPsych.randomization.repeat(T2_stim_study_orig, 1);//Shuffled
+var block_T2_study = {
+	type: 'single-stim',
+	stimuli: T2_study_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+
+var T2_stim_orig =[[''+wordArray[32].strong+'    '+'_______'+''],
+		[''+wordArray[33].weak+'    '+'_______'+''],
+		[''+wordArray[34].strong+'    '+'_______'+''],
+		[''+wordArray[35].weak+'    '+'_______'+''],
+		[''+wordArray[36].strong+'    '+'_______'+''],
+		[''+wordArray[37].weak+'    '+'_______'+''],
+		[''+wordArray[38].strong+'    '+'_______'+''],
+		[''+wordArray[39].weak+'    '+'_______'+'']
+		];
+		
+var T2_stim = jsPsych.randomization.repeat(T2_stim_orig, 1);//Shuffled
+var block_T2 = {
+	type: 'survey-text-table',
+	questions: T2_stim,
+	is_html: true,
+	
+};
+
+var T3_stim_study_orig = ['<center>'+wordArray[40].strong+'    '+wordArray[40].target+'</center>',
+		'<center>'+wordArray[41].weak+'    '+wordArray[41].target+'</center>',
+		'<center>'+wordArray[42].strong+'    '+wordArray[42].target+'</center>',
+		'<center>'+wordArray[43].weak+'    '+wordArray[43].target+'</center>',
+		'<center>'+wordArray[44].strong+'    '+wordArray[44].target+'</center>',
+		'<center>'+wordArray[45].weak+'    '+wordArray[45].target+'</center>',
+		'<center>'+wordArray[46].strong+'    '+wordArray[46].target+'</center>',
+		'<center>'+wordArray[47].weak+'    '+wordArray[47].target+'</center>'
+		];
+
+var T3_study_stim = jsPsych.randomization.repeat(T3_stim_study_orig, 1);//Shuffled
+var block_T3_study = {
+	type: 'single-stim',
+	stimuli: T3_study_stim,
+	is_html: true,
+	choices: ['1','2','3','4','5'], // 1 through 5 relatedness
+    prompt: '<hr><p class="center-content">Rate relatedness of the word pair: 1 (low) - 5(high)</p>'
+};
+var T3_stim_orig =[[''+wordArray[40].strong+'    '+'_______'+''],
+		[''+wordArray[41].weak+'    '+'_______'+''],
+		[''+wordArray[42].strong+'    '+'_______'+''],
+		[''+wordArray[43].weak+'    '+'_______'+''],
+		[''+wordArray[44].strong+'    '+'_______'+''],
+		[''+wordArray[45].weak+'    '+'_______'+''],
+		[''+wordArray[46].strong+'    '+'_______'+''],
+		[''+wordArray[47].weak+'    '+'_______'+'']
+		];
+
+var T3_stim = jsPsych.randomization.repeat(T3_stim_orig, 1);//Shuffled
+var block_T3 = {
+	type: 'survey-text-table',
+	questions: T3_stim,
+	is_html: true,
+};
+
+var final_exam_block = {
+			type: "survey-text",
+			questions: [["Please type all of the words that you remember from the experiment. Please put a comma between each word."]]
+		};
+
+var page_1_questions = ["My attention is often focused on aspects of myself I wish I'd stop thinking about.",
+ "I always seem to be rehashing in my mind recent things I've said or done.",
+ "Sometimes it is hard for me to shut off thoughts about myself.",
+ "Long after an argument or disagreement is over with, my thoughts keep going back to what happened.",
+ "I tend to 'ruminate' or dwell over things that happen to me for a really long time afterward.",
+ "I don't often waste time rethinking things that are over and done with.",
+ "Often I'm playing back over in my mind how I acted in a past situation.",
+ "I often find myself reevaluating something I've done.",
+ "I never ruminate or dwell on myself for very long.",
+ "It is easy for me to put unwanted thoughts out of my mind.",
+ "I often reflect on episodes in my life that I should no longer concern myself with.",
+ "I spend a great deal of time thinking back over my embarrassing or disappointing moments.",
+ "Philosphical or abstract thinking doesn't appeal to me much.",
+ "I'm not really a meditative type of person.",
+ "I love exploring my 'inner' self.",
+ "My attitudes and feelings about things fascinate me.",
+ "I don't really care for introspective or self-reflective thinking.",
+ "I love analyzing why I do things.",
+ "Peope often say I'm a 'deep', introspective person.",
+ "I don't care much for self-analysis.",
+ "I'm very self-inquisitive by nature.",
+ "I love to meditate on the nature and meaning of things.",
+ "I often love to look at my life in phiosophical ways.",
+ "Contemplating myself isn't my idea of fun."];
+
+  // defining two different response scales that can be used.
+  var scale_1 = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"];
+  var scale_2 = ["Strongly Disagree", "Disagree", "Somewhat Disagree", "Neural", "Somewhat Agree", "Agree", "Strongly Agree"];
+
+var likert_RRQ = {
+      type: 'survey-likert',
+      questions: [page_1_questions],
+      labels: [[scale_1,scale_1,scale_1,scale_1,scale_1,scale_1,
+      	scale_1,scale_1,scale_1,scale_1,scale_1,scale_1,
+      	scale_1,scale_1,scale_1,scale_1,scale_1,scale_1,
+      	scale_1,scale_1,scale_1,scale_1,scale_1,scale_1]], // need one scale for every question on a page
+      intervals: [[5,5,5,5,5,5,
+      	5,5,5,5,5,5,
+      	5,5,5,5,5,5,
+      	5,5,5,5,5,5]] // note the the intervals and labels don't necessarily need to match.
+  };
+  
+  var tetris_300 = {
+  	type: "single-stim",
+  	stimuli: ['<embed src="http://www.classicgamesarcade.com/games/flash-tetris.swf" menu=false width=550 height=650' + 
+            'quality=high type="application/x-shockwave-flash"' + 
+            'pluginspage="http://www.macromedia.com/go/getflashplayer/" />'],
+    is_html: true,
+    timing_response: 5000,
+    continue_after_response: false,
+    prompt: "Please play tetris for a little while. This page will automatically advance after a certain amount of time."
+  };
+  
+//Need to make function that pseudo shuffles in pairs (to have learning blocks preceed the test block etc, e.g. T2 learn block is always before T2 Test block)
+//var the_blocks = jsPsych.randomization.repeat(block_T1_study, block_T1,block_T2_study,block_T2,block_T3_study,block_T3,block_R1_study,block_R1,block_R2_study,block_R2,block_R3_study,block_R3], 1);
+var the_blocks = [block_T1_study,
+				block_T1,
+				block_T2_study,
+				block_T2,
+				block_T3_study,
+				block_T3,
+				block_R1_study,
+				block_R1,
+				block_R2_study,
+				block_R2,
+				block_R3_study,
+				block_R3
+				];
+
+pairShuff(the_blocks);
+
+var the_experiment = [ intro,
+/*				the_blocks[0],
+				the_blocks[1],
+				tetris,
+				the_blocks[2],
+				the_blocks[3],
+				the_blocks[4],
+				the_blocks[5],
+				the_blocks[6],
+				the_blocks[7],
+				the_blocks[8],
+				the_blocks[9],
+				the_blocks[10],
+				the_blocks[11],
+				final_exam_block,*/
+				likert_RRQ,
+				];
+
+  jsPsych.init({
+    display_element: $('#jspsych-target'),
+    experiment_structure: the_experiment//[block_T2,block_T3,block_T1,block_STUDY,block_R1,block_R2,block_R3],
+});
+
+function fisherYates ( myArray ) {
+  var i = myArray.length;
+  if ( i == 0 ) return false;
+  while ( --i ) {
+     var j = Math.floor( Math.random() * ( i + 1 ) );
+     var tempi = myArray[i];
+     var tempj = myArray[j];
+     myArray[i] = tempj;
+     myArray[j] = tempi;
+   }
+   return myArray;
+}
+
+//So this should keep the relevant pairs together, but switch around their placement, this is just pseudo shuffling by randomly placing rearranging the pairs for 20 iterations
+function pairShuff ( myArray2 ) {
+	var pos = [1,3,5,7,9,11];
+	for (i = 0; i < 20; i++) {
+	    jsPsych.randomization.repeat(pos,1); // to get new random position
+		var tmp = myArray2[pos[1]];
+		myArray2[pos[1]] = myArray2[pos[3]];
+		myArray2[pos[3]] = tmp;
+		var tmp2 = myArray2[pos[1]+1];
+		myArray2[pos[1]+1] = myArray2[pos[3]+1];
+		myArray2[pos[3]+1] = tmp2;
+	}
+	return myArray2;
+}
+  </script>
+</html>

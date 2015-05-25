@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="js/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="plugins/jspsych-text.js"></script>
+ 	<script src="plugins/jspsych-single-stim.js"></script>
+ 	<script src="plugins/jspsych-survey-text.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="../jspsych.js"></script>
+    <script src="../plugins/jspsych-survey-text.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css"></link>
+    <link rel="stylesheet" href="../css/jspsych.css"></link>
+  </head>
+  <body>
+    <div id="jspsych-target"></div>
+  </body>
+  <script>
+  
+  
+
+
+//function interShuff (  ) {
+//var newArray=[];	
+//var order=[0,1,2,3];
+//var count=0;
+//var tmp= [];
+//for ( i=0; i<12, i++){
+
+//order=constrShuff(order);
+//newArray[count+order[0]] = cat1[i];
+//newArray[count+order[1]] = cat2[i];
+//newArray[count+order[2]] = cat3[i];
+//newArray[count+order[3]] = cat4[i];
+//count=count+4;
+
+//tmp1=[cat1[i],cat2[i],cat3[i],cat4[i]];
+//newArray=newArray.concat(cat1,cat2,cat3,cat4);
+
+//}
+//return cat1;
+//}
+
+*/
+/*
+//This makes new order
+function constrShuff(order){
+var tmp=[0,1,2,3];
+while(tmp[0]==order[3])	{
+	tmp = shuffle(tmp);
+}
+return tmp;
+}
+*/
+/*
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+}
+*/
+  
+  
+  
+  
+
+  // defining groups of questions that will go together.
+var id = Math.floor(Math.random()*1000000000);
+		
+		/*Get Amazon ID*/
+		var mTurk_ID_block = {
+			type: 'survey-text',
+			questions: [["What is your Amazon mTurk user ID?"]]
+		};
+		
+		/*Instructions block*/
+		var instructions = {
+			type: "text",
+			text: "<b>Welcome to the experiment.</b>" + 
+			"<p>In this experiment, you will be shown some words and images. Please try and remember them.</p>" + 
+          "<br><p>Please do NOT refresh the page during the study or you will not be compensated.</p><br>" +
+          "<p>Press any key to begin. This study should take you approximately 5 minutes. You will receive a numerial code at the conclusion of the study to input into mTurk.</p>"
+        };
+
+		/*Define presentation block*/
+		
+		var experiment = [];
+		experiment.push(mTurk_ID_block);
+		experiment.push(instructions);
+		
+
+  jsPsych.init({
+    display_element: $('#jspsych-target'),
+    experiment_structure: [experiment]
+  });
+
+
+  </script>
+</html>
