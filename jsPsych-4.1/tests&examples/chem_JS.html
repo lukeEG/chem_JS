@@ -5,6 +5,7 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="../jspsych.js"></script>
     <script src="../plugins/jspsych-single-stim.js"></script>
+    <script src="../plugins/jspsych-survey-likert.js"></script>
     <script src="../plugins/jspsych-free-sort.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css"></link>
     <link rel="stylesheet" href="css/jspsych.css"></link>
@@ -31,7 +32,7 @@
 
 //ADD ALL IMAGES TO PRECACHING
 		
-var cat1=["img/05_453848.jpg","img/05_477919.jpg","img/05_553503.jpg","img/05_26464824_.jpg","img/05_24748672.jpg","img/05_24010826.jpg","img/05_21404254.jpg","img/05_21241485.jpg","img/05_17365005.jpg",
+var cat1=["img/05_453848.jpg","img/05_477919.jpg","img/05_553503.jpg","img/05_26464824.jpg","img/05_24748672.jpg","img/05_24010826.jpg","img/05_21404254.jpg","img/05_21241485.jpg","img/05_17365005.jpg",
 "img/05_13687615.jpg","img/05_13493643.jpg","img/05_13205946.jpg","img/05_8074461.jpg","img/05_4518670.jpg","img/05_4482227.jpg","img/05_3902320.jpg","img/05_2103243.jpg","img/05_2056749.jpg","img/05_2039966.jpg",
 "img/05_2017296.jpg"];	
 var cat2=["img/06_5062.jpg","img/06_5693.jpg","img/06_15115.jpg","img/06_16434.jpg","img/06_31006.jpg","img/06_58980.jpg","img/06_107117.jpg","img/06_120480.jpg",
@@ -43,10 +44,10 @@ var cat3=["img/07_2458.jpg","img/07_86281.jpg","img/07_88348.jpg","img/07_94566.
 var cat4=["img/08_120089.jpg","img/08_83892.jpg","img/08_80174.jpg","img/08_76528.jpg","img/08_71964.jpg","img/08_165288.jpg","img/08_191110.jpg","img/08_242579.jpg",
 "img/08_276956.jpg","img/08_558466.jpg","img/08_637872.jpg","img/08_644505.jpg","img/08_721030.jpg","img/08_1554182.jpg","img/08_2042148.jpg","img/08_2058502.jpg","img/08_2062880.jpg",
 "img/08_3661879.jpg","img/08_14756683.jpg","img/08_21328690.jpg"];
-cat1=shuffle(cat1);
-cat2=shuffle(cat2);
-cat3=shuffle(cat3);
-cat4=shuffle(cat4);
+//cat1=shuffle(cat1);
+//cat2=shuffle(cat2);
+//cat3=shuffle(cat3);
+//cat4=shuffle(cat4);
 
 //BEGIN PRECACHE
 var all=(cat1.concat(cat2,cat3,cat4));
@@ -60,12 +61,12 @@ var order=[0,1,2,3];
 order=getOrder(order);
 var newArray=[];
 holdorders=[];
-window.alert(order);
 
 
 ///STUDY ARRAY
 newArray.splice(order[0],0,cat1[0]);newArray.splice(order[1],0,cat2[0]);newArray.splice(order[2],0,cat3[0]);newArray.splice(order[3],0,cat4[0]);
 order=getOrder(order);
+//window.alert(newArray);
 newArray.splice((order[0]+4),0,cat1[1]);newArray.splice((order[1]+4),0,cat2[1]);newArray.splice((order[2]+4),0,cat3[1]);newArray.splice((order[3]+4),0,cat4[1]);
 order=getOrder(order);
 newArray.splice((order[0]+8),0,cat1[2]);newArray.splice((order[1]+8),0,cat2[2]);newArray.splice((order[2]+8),0,cat3[2]);newArray.splice((order[3]+8),0,cat4[2]);
@@ -88,36 +89,68 @@ newArray.splice((order[0]+40),0,cat1[10]);newArray.splice((order[1]+40),0,cat2[1
 order=getOrder(order);
 newArray.splice((order[0]+44),0,cat1[11]);newArray.splice((order[1]+44),0,cat2[11]);newArray.splice((order[2]+44),0,cat3[11]);newArray.splice((order[3]+44),0,cat4[11]);
 order=getOrder(order);
-newArray.splice((order[0]+48),0,cat1[12]);newArray.splice((order[1]+48),0,cat2[12]);newArray.splice((order[2]+48),0,cat3[12]);newArray.splice((order[3]+48),0,cat4[12]);
-order=getOrder(order);
-
-
+//window.alert(newArray);
+window.alert(newArray.length);
 /////TEST ARRAY
 testArray=[];
-testArray.splice((order[0]),0,cat1[13]);testArray.splice((order[1]),0,cat2[13]);testArray.splice((order[2]),0,cat3[13]);testArray.splice((order[3]),0,cat4[13]);
-order=getOrder(order);
-testArray.splice((order[0]+4),0,cat1[14]);testArray.splice((order[1]+4),0,cat2[14]);testArray.splice((order[2]+4),0,cat3[14]);testArray.splice((order[3]+4),0,cat4[14]);
-order=getOrder(order);
-testArray.splice((order[0]+8),0,cat1[15]);testArray.splice((order[1]+8),0,cat2[15]);testArray.splice((order[2]+8),0,cat3[15]);testArray.splice((order[3]+8),0,cat4[15]);
-order=getOrder(order);
-testArray.splice((order[0]+12),0,cat1[16]);testArray.splice((order[1]+12),0,cat2[16]);testArray.splice((order[2]+12),0,cat3[16]);testArray.splice((order[3]+12),0,cat4[16]);
-order=getOrder(order);
-testArray.splice((order[0]+16),0,cat1[17]);testArray.splice((order[1]+16),0,cat2[17]);testArray.splice((order[2]+16),0,cat3[17]);testArray.splice((order[3]+16),0,cat4[17]);
-order=getOrder(order);
-testArray.splice((order[0]+20),0,cat1[18]);testArray.splice((order[1]+20),0,cat2[18]);testArray.splice((order[2]+20),0,cat3[18]);testArray.splice((order[3]+20),0,cat4[18]);
-order=getOrder(order);
-testArray.splice((order[0]+24),0,cat1[19]);testArray.splice((order[1]+24),0,cat2[19]);testArray.splice((order[2]+24),0,cat3[19]);testArray.splice((order[3]+24),0,cat4[19]);
-order=getOrder(order);
-testArray.splice((order[0]+28),0,cat1[20]);testArray.splice((order[1]+28),0,cat2[20]);testArray.splice((order[2]+28),0,cat3[20]);testArray.splice((order[3]+28),0,cat4[20]);
 
-testArray=shuffle(testArray);
 
-//TESTING
+
+
+order=getOrder(order);
+testArray.splice((order[0]),0,cat1[12]);testArray.splice((order[1]),0,cat2[12]);testArray.splice((order[2]),0,cat3[12]);testArray.splice((order[3]),0,cat4[12]);
+window.alert(testArray.length);
+order=getOrder(order);
+testArray.splice((order[0]+4),0,cat1[13]);testArray.splice((order[1]+4),0,cat2[13]);testArray.splice((order[2]+4),0,cat3[13]);testArray.splice((order[3]+4),0,cat4[13]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+8),0,cat1[14]);testArray.splice((order[1]+8),0,cat2[14]);testArray.splice((order[2]+8),0,cat3[14]);testArray.splice((order[3]+8),0,cat4[14]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+12),0,cat1[15]);testArray.splice((order[1]+12),0,cat2[15]);testArray.splice((order[2]+12),0,cat3[15]);testArray.splice((order[3]+12),0,cat4[15]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+16),0,cat1[16]);testArray.splice((order[1]+16),0,cat2[16]);testArray.splice((order[2]+16),0,cat3[16]);testArray.splice((order[3]+16),0,cat4[16]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+20),0,cat1[17]);testArray.splice((order[1]+20),0,cat2[17]);testArray.splice((order[2]+20),0,cat3[17]);testArray.splice((order[3]+20),0,cat4[17]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+24),0,cat1[18]);testArray.splice((order[1]+24),0,cat2[18]);testArray.splice((order[2]+24),0,cat3[18]);testArray.splice((order[3]+24),0,cat4[18]);
+order=getOrder(order);
+window.alert(testArray.length);
+testArray.splice((order[0]+28),0,cat1[19]);testArray.splice((order[1]+28),0,cat2[19]);testArray.splice((order[2]+28),0,cat3[19]);testArray.splice((order[3]+28),0,cat4[19]);
+order=getOrder(order);
+window.alert(testArray.length);
+
+//testArray=shuffle(testArray);
+
+
+//for loop to make test array "name" +"_T"+".jpg"
+
+var tArray=[];
+var theL= 0;
+var rs=[];
+for (i=0;i<32;i++) {
+
+//window.alert(order);
+theL=testArray[i].length;
+
+//theL=theL-3;
+tArray.push(testArray[i].substring(0,theL-4)+"_T.jpg");
+//window.alert(tArray);
+
+//window.alert(tArray[i]);
+}
+window.alert(testArray.length);
+//window.alert(tArray);
+//}
+/*TESTING
 interStudy=newArray.slice(0,4);
 interStudy=shuffle(interStudy);
 window.alert(interStudy);
 window.alert(newArray.slice(0,4));
-///END TESTING
+*///END TESTING
 
 //var imArray = shuffle(all);//=["img/07_2458.jpg","img/07_94566.jpg","img/06_5062.jpg","img/06_477473.jpg","img/05_8074461.jpg","img/05_553503.jpg","img/08_120089.jpg","img/08_71964.jpg"];
 //var  myArray = interShuff(cat1,cat2,cat3,cat4);
@@ -127,29 +160,53 @@ window.alert(newArray.slice(0,4));
 //var studyArray = tmpArray.slice(0,47);
 var study_block = {
 			type: "single-stim",
-			stimuli: newArray,
-			timing_response: 2000,
+			stimuli: cat1,
+			timing_response: 8000,
 			is_html: false,
 			continue_after_response: false
 		};
 		
 		
-		///NEED SOME DELAY HERE, 10 MINUTES
+		///NEED SOME DELAY HERE, 10-15 MINUTES
 		
-/*
+
 var test_block = {
 			type: "single-stim",
-			stimuli: testArray,
-			timing_response: -1, //This means it waits until they press a key
-			is_html: true,
-			continue_after_response: true
+			stimuli: tArray,
+			//timing_stim: -1;
+			//timing_response: -1, //This means it waits until they press a key
+			is_html: false,
+			continue_after_response: true,
+			choices:["1","2","3","4"],
 			prompt: "1) Glemdate  2) Betalonine  3) Alporost  4) Yirnirine "
 		};
 
-*/
+CLJ_Qs = ["If right now we were to present to you the molecular formula (in diagram form) of a particular Glemdate, how confident are you that you would be able to recognize it as a Glemdate?<br></br>",
+"If right now we were to present to you the molecular formula (in diagram form) of a particular Betalonine, how confident are you that you would be able to recognize it as a Betalonine?<br></br>",
+"If right now we were to present to you the molecular formula (in diagram form) of a particular Alporost, how confident are you that you would be able to recognize it as a Alporost?<br></br>",
+"If right now we were to present to you the molecular formula (in diagram form) of a particular Yirnirine, how confident are you that you would be able to recognize it as a Yirnirine?<br></br>"];
+var CLJ_block = {
+			type: "single-stim",
+			stimuli: CLJ_Qs,
+			//timing_stim: -1;
+			//timing_response: -1, //This means it waits until they press a key
+			is_html: true,
+			continue_after_response: true,
+			choices:["1","2","3","4","5","6","7"],
+			prompt: "Press a key 1 through 7, 1 being not confident and 7 being very confident."
+		};
   
-//Need to make function that pseudo shuffles in pairs (to have learning blocks preceed the test block etc, e.g. T2 learn block is always before T2 Test block)
-//var the_blocks = jsPsych.randomization.repeat(block_T1_study, block_T1,block_T2_study,block_T2,block_T3_study,block_T3,block_R1_study,block_R1,block_R2_study,block_R2,block_R3_study,block_R3], 1);
+
+var tetris_300 = {
+  	type: "single-stim",
+  	stimuli: ['<embed src="http://www.classicgamesarcade.com/games/flash-tetris.swf" menu=false width=550 height=650' + 
+            'quality=high type="application/x-shockwave-flash"' + 
+            'pluginspage="http://www.macromedia.com/go/getflashplayer/" />'],
+    is_html: true,
+    timing_response: 5,
+    continue_after_response: false,
+    prompt: "Please play tetris for a little while. This page will automatically advance after a certain amount of time."
+  };
 
 var the_experiment = [study_block];
   jsPsych.init({
@@ -160,7 +217,7 @@ var the_experiment = [study_block];
 
 function getOrder (order) {
 //var newOrder = shuffle(order);	
-thechoice= Math.floor((Math.random() * 6) + 1);
+thechoice= Math.floor((Math.random() * 10) + 1);
 var newOrder=[];
 if(thechoice==1){
 	newOrder = [0,1,2,3];
