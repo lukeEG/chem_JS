@@ -28,7 +28,10 @@
   //10 minute delay, with something
   //DONE-Test block
 
-
+var order=[0,1,2,3];
+order=getOrder(order);
+var newArray=[];
+holdorders=[];
 
 //ADD ALL IMAGES TO PRECACHING
 		
@@ -55,14 +58,46 @@ var all=(cat1.concat(cat2,cat3,cat4));
 		jsPsych.preloadImages(all, function(){ startExperiment(); });
 		
 //END PRECACHE
-		
-		
-var order=[0,1,2,3];
-order=getOrder(order);
-var newArray=[];
-holdorders=[];
 
 
+//Making blocked study/test
+var blockStudy=[];
+var blocks1=[];
+var blocks2=[];
+var blocks3=[];
+var blocks4=[];
+for (i=0;i<12;i++) {
+blocks1.push(cat1[i]);
+}	
+for (i=0;i<12;i++) {
+blocks2.push(cat2[i]);
+}
+for (i=0;i<12;i++) {
+blocks3.push(cat3[i]);
+}
+for (i=0;i<12;i++) {
+blocks4.push(cat4[i]);
+}
+
+blockStudy = [blocks1,blocks2,blocks3,blocks4];	
+//blockStudy = shuffle(blockStudy);		
+window.alert(blockStudy);
+
+//Making blocked test portion
+var blockTest=[];
+for (i=12;i<20;i++) {
+blockTest.push(cat1[i]);
+}	
+for (i=12;i<20;i++) {
+blockTest.push(cat2[i]);
+}	
+for (i=12;i<20;i++) {
+blockTest.push(cat3[i]);
+}	
+for (i=12;i<20;i++) {
+blockTest.push(cat4[i]);
+}	
+//window.alert(blockTest);
 ///STUDY ARRAY
 newArray.splice(order[0],0,cat1[0]);newArray.splice(order[1],0,cat2[0]);newArray.splice(order[2],0,cat3[0]);newArray.splice(order[3],0,cat4[0]);
 order=getOrder(order);
@@ -90,38 +125,35 @@ order=getOrder(order);
 newArray.splice((order[0]+44),0,cat1[11]);newArray.splice((order[1]+44),0,cat2[11]);newArray.splice((order[2]+44),0,cat3[11]);newArray.splice((order[3]+44),0,cat4[11]);
 order=getOrder(order);
 //window.alert(newArray);
-window.alert(newArray.length);
+//window.alert(newArray.length);
 /////TEST ARRAY
 testArray=[];
 
-
-
-
 order=getOrder(order);
 testArray.splice((order[0]),0,cat1[12]);testArray.splice((order[1]),0,cat2[12]);testArray.splice((order[2]),0,cat3[12]);testArray.splice((order[3]),0,cat4[12]);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 order=getOrder(order);
 testArray.splice((order[0]+4),0,cat1[13]);testArray.splice((order[1]+4),0,cat2[13]);testArray.splice((order[2]+4),0,cat3[13]);testArray.splice((order[3]+4),0,cat4[13]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+8),0,cat1[14]);testArray.splice((order[1]+8),0,cat2[14]);testArray.splice((order[2]+8),0,cat3[14]);testArray.splice((order[3]+8),0,cat4[14]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+12),0,cat1[15]);testArray.splice((order[1]+12),0,cat2[15]);testArray.splice((order[2]+12),0,cat3[15]);testArray.splice((order[3]+12),0,cat4[15]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+16),0,cat1[16]);testArray.splice((order[1]+16),0,cat2[16]);testArray.splice((order[2]+16),0,cat3[16]);testArray.splice((order[3]+16),0,cat4[16]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+20),0,cat1[17]);testArray.splice((order[1]+20),0,cat2[17]);testArray.splice((order[2]+20),0,cat3[17]);testArray.splice((order[3]+20),0,cat4[17]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+24),0,cat1[18]);testArray.splice((order[1]+24),0,cat2[18]);testArray.splice((order[2]+24),0,cat3[18]);testArray.splice((order[3]+24),0,cat4[18]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 testArray.splice((order[0]+28),0,cat1[19]);testArray.splice((order[1]+28),0,cat2[19]);testArray.splice((order[2]+28),0,cat3[19]);testArray.splice((order[3]+28),0,cat4[19]);
 order=getOrder(order);
-window.alert(testArray.length);
+//window.alert(testArray.length);
 
 //testArray=shuffle(testArray);
 
@@ -142,7 +174,7 @@ tArray.push(testArray[i].substring(0,theL-4)+"_T.jpg");
 
 //window.alert(tArray[i]);
 }
-window.alert(testArray.length);
+//window.alert(testArray.length);
 //window.alert(tArray);
 //}
 /*TESTING
@@ -151,17 +183,31 @@ interStudy=shuffle(interStudy);
 window.alert(interStudy);
 window.alert(newArray.slice(0,4));
 *///END TESTING
+//for (i=0;i<10;i++){
+inter_or_block= Math.floor((Math.random() * 2) + 1); //Blocked or interleaved?
+window.alert(inter_or_block);
+//}
+if (inter_or_block==1){
+	//Interleaved
+	var studyArray= newArray;
+	var testStim = tArray; //Terrible naming scheme..
+	
+} else if(inter_or_block==2){
+	
+	var studyArray= blockStudy;
+	var testStim = blockTest;
+}
 
 //var imArray = shuffle(all);//=["img/07_2458.jpg","img/07_94566.jpg","img/06_5062.jpg","img/06_477473.jpg","img/05_8074461.jpg","img/05_553503.jpg","img/08_120089.jpg","img/08_71964.jpg"];
 //var  myArray = interShuff(cat1,cat2,cat3,cat4);
   var page_1_questions = ["How old are you?", "Where were you born?","Have you ever taken college courses in chemistry? Type in the amount of chemistry courses (0 if none)"];
-  var page_2_questions = ["What is your favorite food?"];
+
 
 //var studyArray = tmpArray.slice(0,47);
 var study_block = {
 			type: "single-stim",
-			stimuli: cat1,
-			timing_response: 8000,
+			stimuli: studyArray,
+			timing_response: 1000,
 			is_html: false,
 			continue_after_response: false
 		};
@@ -172,7 +218,7 @@ var study_block = {
 
 var test_block = {
 			type: "single-stim",
-			stimuli: tArray,
+			stimuli: testStim,
 			//timing_stim: -1;
 			//timing_response: -1, //This means it waits until they press a key
 			is_html: false,
@@ -196,19 +242,19 @@ var CLJ_block = {
 			prompt: "Press a key 1 through 7, 1 being not confident and 7 being very confident."
 		};
   
-
+var delay = 600; //Seconds
 var tetris_300 = {
   	type: "single-stim",
   	stimuli: ['<embed src="http://www.classicgamesarcade.com/games/flash-tetris.swf" menu=false width=550 height=650' + 
             'quality=high type="application/x-shockwave-flash"' + 
             'pluginspage="http://www.macromedia.com/go/getflashplayer/" />'],
     is_html: true,
-    timing_response: 5,
+    timing_response: delay*1000,
     continue_after_response: false,
-    prompt: "Please play tetris for a little while. This page will automatically advance after a certain amount of time."
+    prompt: "Please play tetris for a little while. This page will automatically advance after 10 minutes."
   };
 
-var the_experiment = [study_block];
+var the_experiment = [study_block,tetris_300,test_block];
   jsPsych.init({
     display_element: $('#jspsych-target'),
     experiment_structure: the_experiment//[block_T2,block_T3,block_T1,block_STUDY,block_R1,block_R2,block_R3],
@@ -218,6 +264,7 @@ var the_experiment = [study_block];
 function getOrder (order) {
 //var newOrder = shuffle(order);	
 thechoice= Math.floor((Math.random() * 10) + 1);
+//window.alert(thechoice);
 var newOrder=[];
 if(thechoice==1){
 	newOrder = [0,1,2,3];
