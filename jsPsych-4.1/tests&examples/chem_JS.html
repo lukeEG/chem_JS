@@ -6,6 +6,7 @@
     <script src="../jspsych.js"></script>
     <script src="../plugins/jspsych-single-stim.js"></script>
     <script src="../plugins/jspsych-survey-likert.js"></script>
+    <script src="../plugins/jspsych-survey-text.js"></script>
     <script src="../plugins/jspsych-free-sort.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css"></link>
     <link rel="stylesheet" href="css/jspsych.css"></link>
@@ -61,25 +62,32 @@ var all=(cat1.concat(cat2,cat3,cat4));
 
 
 //Making blocked study/test
+blockOrder=[0,12,24,36];
+blockOrder=shuffle(blockOrder);
 var blockStudy=[];
-var blocks1=[];
-var blocks2=[];
-var blocks3=[];
-var blocks4=[];
-for (i=0;i<12;i++) {
-blocks1.push(cat1[i]);
+tmpi=0;
+for (i=blockOrder[0];i<(blockOrder[0]+12);i++) {
+blockStudy[i]=(cat1[tmpi]);
+tmpi=tmpi+1;
 }	
-for (i=0;i<12;i++) {
-blocks2.push(cat2[i]);
+tmpi=0;
+for (i=blockOrder[1];i<(blockOrder[1]+12);i++) {
+blockStudy[i]=(cat2[tmpi]);
+tmpi=tmpi+1;
 }
-for (i=0;i<12;i++) {
-blocks3.push(cat3[i]);
+tmpi=0;
+for (i=blockOrder[2];i<(blockOrder[2]+12);i++) {
+blockStudy[i]=(cat3[tmpi]);
+tmpi=tmpi+1;
 }
-for (i=0;i<12;i++) {
-blocks4.push(cat4[i]);
+tmpi=0;
+for (i=blockOrder[3];i<(blockOrder[3]+12);i++) {
+blockStudy[i]=(cat4[tmpi]);
+tmpi=tmpi+1;
 }
+tmpi=0;
 
-blockStudy = [blocks1,blocks2,blocks3,blocks4];	
+
 //blockStudy = shuffle(blockStudy);		
 window.alert(blockStudy);
 
@@ -97,7 +105,10 @@ blockTest.push(cat3[i]);
 for (i=12;i<20;i++) {
 blockTest.push(cat4[i]);
 }	
-//window.alert(blockTest);
+window.alert(blockTest);
+//Shuffle block test
+blockTest=shuffle(blockTest);
+
 ///STUDY ARRAY
 newArray.splice(order[0],0,cat1[0]);newArray.splice(order[1],0,cat2[0]);newArray.splice(order[2],0,cat3[0]);newArray.splice(order[3],0,cat4[0]);
 order=getOrder(order);
@@ -174,6 +185,7 @@ tArray.push(testArray[i].substring(0,theL-4)+"_T.jpg");
 
 //window.alert(tArray[i]);
 }
+tArray=shuffle(tArray);
 //window.alert(testArray.length);
 //window.alert(tArray);
 //}
@@ -207,7 +219,7 @@ if (inter_or_block==1){
 var study_block = {
 			type: "single-stim",
 			stimuli: studyArray,
-			timing_response: 1000,
+			timing_response: 8000,
 			is_html: false,
 			continue_after_response: false
 		};
@@ -251,10 +263,15 @@ var tetris_300 = {
     is_html: true,
     timing_response: delay*1000,
     continue_after_response: false,
-    prompt: "Please play tetris for a little while. This page will automatically advance after 10 minutes."
+    prompt: "Please play tetris for 10 minutes. This page will automatically advance after 10 minutes."
   };
+  
+ var final_Qs = {
+			type: "survey-text",
+			questions: [["Have you ever taken a college course in chemistry? Please enter in the amount of chemistry courses you have taken"]]
+		};
 
-var the_experiment = [study_block,tetris_300,test_block];
+var the_experiment = [study_block,CLJ_block,tetris_300,test_block,final_Qs];
   jsPsych.init({
     display_element: $('#jspsych-target'),
     experiment_structure: the_experiment//[block_T2,block_T3,block_T1,block_STUDY,block_R1,block_R2,block_R3],
