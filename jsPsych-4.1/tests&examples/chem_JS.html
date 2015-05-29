@@ -7,6 +7,8 @@
     <script src="../plugins/jspsych-single-stim.js"></script>
     <script src="../plugins/jspsych-survey-likert.js"></script>
     <script src="../plugins/jspsych-survey-text.js"></script>
+    <script src="../plugins/jspsych-survey-text-table.js"></script>
+    <script src="plugins/jspsych-survey-text-table-sp.js"></script>
     <script src="../plugins/jspsych-free-sort.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css"></link>
     <link rel="stylesheet" href="css/jspsych.css"></link>
@@ -266,12 +268,29 @@ var tetris_300 = {
     prompt: "Please play tetris for 10 minutes. This page will automatically advance after 10 minutes."
   };
   
- var final_Qs = {
-			type: "survey-text",
-			questions: [["Have you ever taken a college course in chemistry? Please enter in the amount of chemistry courses you have taken"]]
+ 
+		
+/*Demographics Block*/
+		var demog_qs = [["Have you ever taken a college course in chemistry? Please enter in the amount of chemistry courses you have taken",
+		'What is your age (in years)?',
+		'What is your sex?',
+		'Are you right or left handed?',
+		'What is your race/ethnicity?',
+		'What is your first language?',
+		'At roughly what age did you start speaking English?',
+		'What langauges besides english do you know? (In parenthesis note level of fluency.)'
+		],
+		['What type of device are you using (i.e. MacBook Pro, HP Probook, Lenovo, iPhone, iPad, etc.)',
+		'What Browser are you using? (i.e. Chrome, Firefox, Internet Explorer, Safari)',
+		'What Operating System do you use? (i.e. Windows 7, Apple OS-X, Linux, etc.)',
+		'What kind of internet were you using? (Hardline (Ethernet), Wifi, 4G, etc.)'
+		]];
+		var demographics_block = {
+			type: 'survey-text-table',
+			questions: demog_qs,
 		};
 
-var the_experiment = [study_block,CLJ_block,tetris_300,test_block,final_Qs];
+var the_experiment = [study_block,CLJ_block,tetris_300,test_block,demographics_block];
   jsPsych.init({
     display_element: $('#jspsych-target'),
     experiment_structure: the_experiment//[block_T2,block_T3,block_T1,block_STUDY,block_R1,block_R2,block_R3],
