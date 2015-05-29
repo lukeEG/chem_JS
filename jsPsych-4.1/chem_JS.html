@@ -224,16 +224,16 @@ if (inter_or_block==1){
 //var studyArray = tmpArray.slice(0,47);
 var study_block = {
 			type: "single-stim",
-			stimuli: all,
-			//timing_response: 8000,
+			stimuli: studyArray,
+			timing_response: 8000,
 			is_html: false,
-			//continue_after_response: false
+			continue_after_response: false
 		};
 		
 		
 		///NEED SOME DELAY HERE, 10-15 MINUTES
 		
-
+testStim = shuffle(testStim);
 var test_block = {
 			type: "single-stim",
 			stimuli: testStim,
@@ -336,6 +336,34 @@ var get_mTurk_ID = {
 	}
 };
 
+/*Final Questions Stuff*/
+		var final_qs_inst = {
+			type: "text",
+			text: "Thank you for taking the test. You will now be asked some final questions regarding this experiment.<br><br>"+
+			"Please answer these questions <u>honestly</u>. The content of your responses will not affect your payment (although failure to complete the questions will)."+
+			"<br><br>Press any key to continue."
+		};
+		
+		var final_qs = [["Did the study run smoothly?",
+		"Were there any problems with page loading or lag?",
+		"Have you seen these study materials before?",
+		"How fun was this study on a scale from 1-10?"],
+		["Were you paying attention during this study?",
+		"Did you tab away or do anything else during the study?",
+		"Did you write anything down to reference?",
+		"Do you think we should use your data?"]];
+		var final_questions = {
+			type: 'survey-text',
+			questions: final_qs
+		};
+		
+		/*Last Page*/
+		var last_page = {
+			type: 'text',
+			text: "<b>Thank you for your participation!</b><br><p>If you have any questions or concerns, email admin@cognition-learning.org."+
+			"<br><p>Your mTurk confirmation code is on the following page. Press any key to continue.</p>"
+		};
+
 var periodic_save = {
 	type: 'call-function',
 	func: function(data){
@@ -354,12 +382,12 @@ function saveData(filename, filedata){
 }
 
 var the_experiment = [
-/*				introduction,
+				introduction,
 				mTurk_ID_block,
 				get_mTurk_ID,
 				periodic_save,
 				consent_block,
-				periodic_save,*/
+				periodic_save,
 				study_block,
 				periodic_save,
 				CLJ_block,
@@ -367,8 +395,11 @@ var the_experiment = [
 				tetris_600,
 				test_block,
 				periodic_save,
+				final_qs_inst,
 				demographics_block,
-				periodic_save
+				final_questions,
+				periodic_save,
+				last_page
 				];
 						
 jsPsych.init({
