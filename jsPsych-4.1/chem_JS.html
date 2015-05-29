@@ -49,8 +49,8 @@ var cat2=["img/06_5062.jpg","img/06_5693.jpg","img/06_15115.jpg","img/06_16434.j
 "img/06_389922.jpg","img/06_477473.jpg","img/06_553196.jpg","img/06_4444466.jpg","img/06_8901316.jpg","img/06_13906749.jpg","img/06_15259529.jpg","img/06_17344757.jpg","img/06_19585693.jpg",
 "img/06_22236080.jpg","img/06_22336979.jpg","img/06_28542441.jpg"];
 var cat3=["img/07_2458.jpg","img/07_86281.jpg","img/07_88348.jpg","img/07_94566.jpg","img/07_106689.jpg","img/07_248211.jpg","img/07_266675.jpg","img/07_433793.jpg",
-"img/07_467848.jpg","img/07_636276.jpg","img/07_132961-78-7.jpg","img/07_2016344.jpg","img/07_3280573.jpg","img/07_3814160.jpg","img/07_4444391.jpg","img/07_4576298.jpg","img/07_9240661.jpg","img/07_10150074.jpg",
-"img/07_1054644.jpg","img/07_CB82700140.jpg"];
+"img/07_467848.jpg","img/07_636276.jpg","img/07_1329610-78-7.jpg","img/07_2016344.jpg","img/07_3280573.jpg","img/07_3814160.jpg","img/07_4444391.jpg","img/07_4576298.jpg","img/07_9240661.jpg","img/07_10150074.jpg",
+"img/07_10546444.jpg","img/07_CB82700140.jpg"];
 var cat4=["img/08_120089.jpg","img/08_83892.jpg","img/08_80174.jpg","img/08_76528.jpg","img/08_71964.jpg","img/08_165288.jpg","img/08_191110.jpg","img/08_242579.jpg",
 "img/08_276956.jpg","img/08_558466.jpg","img/08_637872.jpg","img/08_644505.jpg","img/08_721030.jpg","img/08_1554182.jpg","img/08_2042148.jpg","img/08_2058502.jpg","img/08_2062880.jpg",
 "img/08_3661879.jpg","img/08_14756683.jpg","img/08_21328690.jpg"];
@@ -224,10 +224,10 @@ if (inter_or_block==1){
 //var studyArray = tmpArray.slice(0,47);
 var study_block = {
 			type: "single-stim",
-			stimuli: studyArray,
-			timing_response: 8000,
+			stimuli: all,
+			//timing_response: 8000,
 			is_html: false,
-			continue_after_response: false
+			//continue_after_response: false
 		};
 		
 		
@@ -354,12 +354,12 @@ function saveData(filename, filedata){
 }
 
 var the_experiment = [
-				introduction,
+/*				introduction,
 				mTurk_ID_block,
 				get_mTurk_ID,
 				periodic_save,
 				consent_block,
-				periodic_save,
+				periodic_save,*/
 				study_block,
 				periodic_save,
 				CLJ_block,
