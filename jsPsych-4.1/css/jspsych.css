@@ -259,8 +259,8 @@ button:hover {
  }
  
  .jspsych-survey-text-question input {
- 	width: 500px;
- 	height: 200px;
+ 	width: 250px;
+ 	height: 50px;
  }
 
 
@@ -279,7 +279,7 @@ button:hover {
  }
  
 .jspsych-survey-text-table-question input {
-	width: 100px;
+	width: 150px;
 	height: 30px;
 }
 

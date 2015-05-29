@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-  	<title>Chem JS Study</title>
+  	<title>Category Memory</title>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="jspsych.js"></script>
@@ -10,6 +10,9 @@
     <script src="plugins/jspsych-survey-text.js"></script>
     <script src="plugins/jspsych-survey-text-table.js"></script>
     <script src="plugins/jspsych-survey-text-table-sp.js"></script>
+    <script src="plugins/jspsych-call-function.js"></script>
+    <script src="plugins/jspsych-text.js"></script>
+    <script src="plugins/jspsych-html.js"></script>
     <script src="plugins/jspsych-free-sort.js"></script>
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/jspsych.css">
@@ -24,12 +27,12 @@
 
   //TO FINISH: 
   //DONE-Split into two sets, learn and test
-  // DONE-Interleave first set, present it to them
+  //DONE-Interleave first set, present it to them
   
-  //-JOL after
-  //MAKE IMAGES FIT
-  //Names at bottom of screen (ADD into images?, or have as prompts, based on images label?)
-  //10 minute delay, with something
+  //?-JOL after
+  //NEED-MAKE IMAGES FIT
+  //DONE-Names at bottom of screen (ADD into images?, or have as prompts, based on images label?)
+  //DONE-10 minute delay, with something
   //DONE-Test block
 
 var order=[0,1,2,3];
@@ -92,7 +95,7 @@ tmpi=0;
 
 
 //blockStudy = shuffle(blockStudy);		
-window.alert(blockStudy);
+//window.alert(blockStudy);
 
 //Making blocked test portion
 var blockTest=[];
@@ -108,7 +111,7 @@ blockTest.push(cat3[i]);
 for (i=12;i<20;i++) {
 blockTest.push(cat4[i]);
 }	
-window.alert(blockTest);
+//window.alert(blockTest);
 //Shuffle block test
 blockTest=shuffle(blockTest);
 
@@ -234,12 +237,11 @@ var study_block = {
 var test_block = {
 			type: "single-stim",
 			stimuli: testStim,
-			//timing_stim: -1;
-			//timing_response: -1, //This means it waits until they press a key
 			is_html: false,
 			continue_after_response: true,
 			choices:["1","2","3","4"],
-			prompt: "1) Glemdate  2) Betalonine  3) Alporost  4) Yirnirine "
+			prompt: "<hr>1) Glemdate<br>2) Betalonine<br>3) Alporost<br>4) Yirnirine<hr>"+
+			"Please key in youre response."
 		};
 
 CLJ_Qs = ["If right now we were to present to you the molecular formula (in diagram form) of a particular Glemdate, how confident are you that you would be able to recognize it as a Glemdate?<br></br>",
@@ -249,8 +251,6 @@ CLJ_Qs = ["If right now we were to present to you the molecular formula (in diag
 var CLJ_block = {
 			type: "single-stim",
 			stimuli: CLJ_Qs,
-			//timing_stim: -1;
-			//timing_response: -1, //This means it waits until they press a key
 			is_html: true,
 			continue_after_response: true,
 			choices:["1","2","3","4","5","6","7"],
@@ -258,7 +258,7 @@ var CLJ_block = {
 		};
   
 var delay = 600; //Seconds
-var tetris_300 = {
+var tetris_600 = {
   	type: "single-stim",
   	stimuli: ['<embed src="http://www.classicgamesarcade.com/games/flash-tetris.swf" menu=false width=550 height=650' + 
             'quality=high type="application/x-shockwave-flash"' + 
@@ -290,16 +290,96 @@ var tetris_300 = {
 			type: 'survey-text-table',
 			questions: demog_qs,
 		};
+		
+/*Intro Stuff*/
+		var intro_text;
+		if (delay==600) {
+			intro_text="<h2>Welcome to our study!</h2><br>" +
+			"<p>We'll get started in one moment, but please first answer some initial questions. Press any key to continue.</p>";
+		} else {
+			intro_text="<h1>DEBUG MODE: " + id + "</h1>";
+		}
+		var introduction = {
+			type: 'text',
+			text: intro_text,
+		};
 
-var the_experiment = [study_block,
+/*Consent Functions and Block*/
+		var check_consent = function() {
+			if($('#consent_checkbox').is(':checked')) {
+				return true;
+			} else {
+				alert("If you wish to participate in this study, please check the box labeled 'Check this box to indicate your consent.'");
+				return false;
+			}
+			return false;
+		};
+		var consent_block = {
+			type: 'html',
+			pages: [{url: 'chemConsent.html', cont_btn:"start", check_fn: check_consent}]
+		};
+		
+var mTurk_ID_block = {
+	type: 'survey-text',
+	questions: [["What is your Amazon mTurk user ID?"]],
+};
+var mturk_id;
+var id = order + "_" + inter_or_block;
+		
+/*Assign mTurk ID to File Name*/
+var get_mTurk_ID = {
+	type: 'call-function',
+	func: function(){
+		var data = jsPsych.data.getLastTrialData();
+		mturk_id = JSON.parse(data.responses).Q0;
+		id = mturk_id + "_" + id;
+	}
+};
+
+var periodic_save = {
+	type: 'call-function',
+	func: function(data){
+		saveData(id + ".csv", jsPsych.data.dataAsCSV());
+	}
+};
+
+/*Save data function*/
+function saveData(filename, filedata){
+	$.ajax({
+		type:'post',
+		cache: false,
+		url: 'save_data.php',
+		data: {filename: filename, filedata: filedata}
+	});
+}
+
+var the_experiment = [
+				introduction,
+				mTurk_ID_block,
+				get_mTurk_ID,
+				periodic_save,
+				consent_block,
+				periodic_save,
+				study_block,
+				periodic_save,
 				CLJ_block,
-				tetris_300,
+				periodic_save,
+				tetris_600,
 				test_block,
-				demographics_block];
-  jsPsych.init({
+				periodic_save,
+				demographics_block,
+				periodic_save
+				];
+						
+jsPsych.init({
     display_element: $('#jspsych-target'),
     experiment_structure: the_experiment,
-    
+    on_finish: function(data) {
+		saveData(id + ".csv", jsPsych.data.dataAsCSV());
+		//jsPsych.data.displayData('csv');
+		document.write("<center><h1>Your mTurk Code is <u>"+code+"</u></h1></center>");
+  	}
+
 });
 
 function getOrder (order) {

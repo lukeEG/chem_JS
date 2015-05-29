@@ -42,7 +42,7 @@
                 }));
 
                 // add question text and input text box
-                $("#jspsych-survey-text-table-" + i).append('<table><tr><td class="stimulus" width=150>' + trial.questions[i] + '</td><td class="text-response"><input type="text" name="#jspsych-survey-text-table-response-' + i + '"></input></td></tr>');
+                $("#jspsych-survey-text-table-" + i).append('<table><tr><td class="stimulus" width=700>' + trial.questions[i] + '</td><td class="text-response"><input type="text" name="#jspsych-survey-text-table-response-' + i + '"></input></td></tr>');
                
             }
 
