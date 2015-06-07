@@ -201,7 +201,7 @@ if (inter_or_block==1){
 	var testStim = bArray;
 }
 
-  var page_1_questions = ["How old are you?", "Where were you born?","Have you ever taken college courses in chemistry? Type in the amount of chemistry courses (0 if none)"];
+  var page_1_questions = ["How old are you?", "Where were you born?"];
 
 
 var study_block = {
@@ -223,7 +223,7 @@ var test_block = {
 			continue_after_response: true,
 			choices:["1","2","3","4"],
 			prompt: "<hr>1) Glemdate<br>2) Betalonine<br>3) Alporost<br>4) Yirnirine<hr>"+
-			"Please key in youre response."
+			"Please key in your response."
 		};
 
 CLJ_Qs = ["If right now we were to present to you the molecular formula (in diagram form) of a particular Glemdate, how confident are you that you would be able to recognize it as a Glemdate?<br></br>",
@@ -239,7 +239,7 @@ var CLJ_block = {
 			prompt: "Press a key 1 through 7, 1 being not confident and 7 being very confident."
 		};
   
-var delay = 600; //Seconds
+var delay = 300; //Seconds
 var tetris_600 = {
   	type: "single-stim",
   	stimuli: ['<embed src="http://www.classicgamesarcade.com/games/flash-tetris.swf" menu=false width=550 height=650' + 
@@ -248,14 +248,13 @@ var tetris_600 = {
     is_html: true,
     timing_response: delay*1000,
     continue_after_response: false,
-    prompt: "Please play tetris for 10 minutes. This page will automatically advance after 10 minutes."
+    prompt: "Please play tetris for 5 minutes. This page will automatically advance after 5 minutes."
   };
   
  
 		
 /*Demographics Block*/
-		var demog_qs = [["Have you ever taken a college course in chemistry? Please enter in the amount of chemistry courses you have taken",
-		'What is your age (in years)?',
+		var demog_qs = [['What is your age (in years)?',
 		'What is your sex?',
 		'Are you right or left handed?',
 		'What is your race/ethnicity?',
@@ -275,7 +274,7 @@ var tetris_600 = {
 		
 /*Intro Stuff*/
 		var intro_text;
-		if (delay==600) {
+		if (delay==300) {
 			intro_text="<h2>Welcome to our study!</h2><br>" +
 			"<p>We'll get started in one moment, but please first answer some initial questions. Press any key to continue.</p>";
 		} else {
@@ -328,7 +327,8 @@ var get_mTurk_ID = {
 			"<br><br>Press any key to continue."
 		};
 		
-		var final_qs = [["Did the study run smoothly?",
+		var final_qs = [["Have you ever taken a college course in chemistry? Please enter in the amount of chemistry courses you have taken",
+		"Did the study run smoothly?",
 		"Were there any problems with page loading or lag?",
 		"Have you seen these study materials before?",
 		"How fun was this study on a scale from 1-10?"],
@@ -350,7 +350,7 @@ var get_mTurk_ID = {
 
 var study_inst = {
 	type: "text",
-	text: "You will now view some chemical symbols. Each of these chemical symbols has a type associated with it. Please try and remember which types go with which types of chemicals."
+	text: "You will now be presented with examples of four categories of chemicals. The goal is to learn to identify these categories later in this study."
 	+"<br><br>Press any key to continue."
 };
 
@@ -362,7 +362,7 @@ var clj_inst = {
 
 var tetris_inst = {
 	type: "text",
-	text: "On the next screen you will play tetris for a bit. The screen will automatically advance after 10 minutes."	
+	text: "On the next screen you will play tetris for a bit. The screen will automatically advance after 5 minutes."	
 	+"<br><br>Press any key to continue."
 };
 
