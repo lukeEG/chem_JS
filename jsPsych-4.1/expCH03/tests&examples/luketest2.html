@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="js/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="plugins/jspsych-text.js"></script>
+ 	<script src="plugins/jspsych-single-stim.js"></script>
+ 	<script src="plugins/jspsych-survey-text.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="../jspsych.js"></script>
+    <script src="../plugins/jspsych-survey-text.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css"></link>
+    <link rel="stylesheet" href="../css/jspsych.css"></link>
+  </head>
+  <body>
+    <div id="jspsych-target"></div>
+  </body>
+  <script>
+
+  // defining groups of questions that will go together.
+  var id = Math.floor(Math.random()*1000000000);
+		
+		/*Get Amazon ID*/
+		var mTurk_ID_block = {
+			type: 'survey-text',
+			questions: [["What is your Amazon mTurk user ID?"]]
+		};
+		
+		/*Instructions block*/
+		var instructions = {
+			type: "text",
+			text: "<b>Welcome to the experiment.</b>" + 
+			"<p>In this experiment, you will be shown some words and images. Please try and remember them.</p>" + 
+          "<br><p>Please do NOT refresh the page during the study or you will not be compensated.</p><br>" +
+          "<p>Press any key to begin. This study should take you approximately 5 minutes. You will receive a numerial code at the conclusion of the study to input into mTurk.</p>"
+        };
+
+		/*Define presentation block*/
+		
+		var test_stimuli = ['<h1><center>Orange</center></h1>'];
+		var all_trials = jsPsych.randomization.repeat(test_stimuli, 1);
+		
+		/*Test Block 1*/
+		var test_block = {
+			type: "single-stim",
+			stimuli: all_trials,
+			timing_response: 1500,
+			is_html: true,
+			continue_after_response: false
+		};
+		
+		/*Exam Block*/
+		var exam_block = {
+			type: "survey-text",
+			questions: [["Please type all of the words that you remember from the experiment.", 
+			"Please type in all of the images you remember from the experiment."]]
+		};
+		
+		/*Last Questions*/
+		var final_instructions = {
+			type: 'text',
+			text: '<p>Please answer the questions on the following screen. Your payment <b><u>will not</b></u> be affected by the content of your responses. Please answer honestly and accurately.</p>'+
+			'<br><p>Press any key to continue</p>'
+		};
+		
+		var final_questions = {
+			type: 'survey-text',
+			questions:[
+			["Did you have any problems with this study?", "Did everything load quickly and correctly?",
+			"Were any images distorted?"],
+			["What type of device were you using (i.e. MacBook Pro, HP Probook, Lenovo, iPhone, iPad, etc.)",
+			"What Browser were you using? (i.e. Chrome, Firefox, Internet Explorer, Safari)",
+			"What Operating System do you use? (i.e. Windows 7, OS-X, Linux, etc.)",
+			"What kind of internet were you using? (Hardlline, Wifi, 4G, etc.)",],
+			["Where were you doing this study? (i.e. at home, at a cafe, library, etc.)",
+			"Was there any background noise while doing the experiment?",
+			"Did you switch to any other tabs during the experiment?",
+			"Were you paying attention?"]
+			]
+		};
+		
+		/*Last Page*/
+		var last_page = {
+			type: 'text',
+			text: "<b>Thank you for your participation!</b><br><p>If you have any questions or concerns, email admin@cognition-learning.org."+
+			"<br><p>Your mTurk confirmation code is on the following page. Press any key to continue.</p>"
+		};
+		
+		var trial = jsPsych.currentTrial();
+		console.log(trial.type);
+		
+		/*Create experiment array*/
+		var experiment = [];
+		experiment.push(mTurk_ID_block);
+		experiment.push(instructions);
+		experiment.push(test_block);
+		experiment.push(exam_block);
+		experiment.push(final_instructions);
+		experiment.push(final_questions);
+		experiment.push(last_page);
+		
+		/*Save data function*/
+		function saveData(filename, filedata){
+			$.ajax({
+				type:'post',
+				cache: false,
+				url: 'save_data.php',
+				data: {filename: filename, filedata: filedata}
+			});
+		}
+		
+		/*Start the experiment*/
+		function startExperiment() {
+			jsPsych.init({
+				experiment_structure: experiment,
+				on_finish: function(data) {
+					saveData(id + ".csv", jsPsych.data.dataAsCSV());
+					document.write("<center><h1>Your mTurk Code is <u>"+id+"</u></h1></center>");
+				}
+			});
+		}
+
+
+  </script>
+</html>
