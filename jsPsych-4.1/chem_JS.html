@@ -188,6 +188,9 @@ for (i=0;i<32;i++){
 }
 
 inter_or_block= Math.floor((Math.random() * 2) + 1); //Blocked or interleaved?
+
+//KEEPING IT INTERLEAVED FOR NOW
+//inter_or_block=1;
 //window.alert(inter_or_block);
 
 if (inter_or_block==1){
@@ -334,8 +337,8 @@ var get_mTurk_ID = {
 		"Have you seen these study materials before?",
 		"How fun was this study on a scale from 1-10?"],
 		["Were you paying attention during this study?",
-		"Did you tab away or do anything else during the study?",
-		"Did you write anything down to reference?",
+		"Did you tab away or do anything else during the study? (We will pay you regardless of your answer here, please be honest!)",
+		"Did you write anything down to reference? (We will pay you regardless of your answer here, please be honest!)",
 		"Do you think we should use your data?"]];
 		var final_questions = {
 			type: 'survey-text',
@@ -351,8 +354,8 @@ var get_mTurk_ID = {
 
 var study_inst = {
 	type: "text",
-	text: "You will now be presented with examples of four categories of chemicals. The goal is to learn to identify these categories later in this study.  The name of the category will be written below each example. Each example will be presented for 8 seconds. This portion of the study will take approximately 6 minutes. <b><br>Please pay close attention.</br></b> "
-	+"<br><br>Press any key to continue."
+	text: "You will now be presented with examples of four categories of chemicals. The goal is to learn to identify these categories later in this study when you are tested.  The name of the category will be written below each example. Each example will be presented for 8 seconds. This portion of the study will take approximately 6 minutes. <b><br>Please pay close attention.</br></b> "
+	+"<br><br>Press any key to continue. <b>Please pay close attention for the duration of the study, and do not tab away.</b>"
 };
 
 var clj_inst = {
