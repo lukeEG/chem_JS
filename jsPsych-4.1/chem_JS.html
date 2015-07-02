@@ -255,7 +255,14 @@ var tetris_600 = {
   };
   
  
-		
+/*Make sure awake human*/
+var attnCheck = [["In this task it is important that you pay close attention. Please do not take extended breaks <br>between portions of the study. Please answer honestly, you are paid regardless of performance. The integrity of the data is most important to us. In the box below, put your favorite color. Do not write anything down for notes, and please answer as honestly as possible. The task should take about 25 minutes. Do not refresh your browser, or your progress will be deleted. <br><br><br> Human check: What is 2+9? "]]
+
+var attnBlock = {
+	type:'survey-text',
+	questions: attnCheck,
+};
+
 /*Demographics Block*/
 		var demog_qs = [['What is your age (in years)?',
 		"What is your education level? (High school, college, graduate school)",
@@ -397,6 +404,7 @@ var the_experiment = [
 				introduction,
 				mTurk_ID_block,
 				get_mTurk_ID,
+				attnBlock,
 				periodic_save,
 				consent_block,
 				periodic_save,
